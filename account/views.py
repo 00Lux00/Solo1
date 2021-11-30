@@ -52,14 +52,26 @@ class LogoutView(APIView):
 
 class ResetPassword(APIView):
     def get(self, request):
-        email = request.user
-        User = get_user_model()
-        user = get_object_or_404(User, email=email)
-        user.is_active = False
-        user.create_activation_code()
-        user.save()
-        send_activation_mail.delay(email=email, activation_code=str(user.activation_code))
-        return Response('Activation code has been sent to your email', status=status.HTTP_200_OK)
+        email = request.query_params.get('email')
+        try:
+            user = User.objects.get(email=email)
+            user.is_active = False
+            user.create_activation_code()
+            user.save()
+            send_activation_mail(user)
+            return Response('Вам отправлено письмо', status=200)
+        except User.DoesNotExist:
+            return Response({'msg': 'User doesnt exist'}, status=status.HTTP_400_BAD_REQUEST)
+# class ResetPassword(APIView):
+#     def get(self, request):
+#         email = request.user
+#         User = get_user_model()
+#         user = get_object_or_404(User, email=email)
+#         user.is_active = False
+#         user.create_activation_code()
+#         user.save()
+#         send_activation_mail.delay(email=email, activation_code=str(user.activation_code))
+#         return Response('Activation code has been sent to your email', status=status.HTTP_200_OK)
 
 
 class ResetComplete(APIView):

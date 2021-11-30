@@ -5,6 +5,7 @@ from django.urls import path, include
 from django.conf import settings
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
+from rest_framework import permissions
 
 from rest_framework.routers import DefaultRouter
 
@@ -27,10 +28,11 @@ schema_view = get_schema_view(
           license=openapi.License(name="BSD License"),
        ),
     public=True,
+    permission_classes=(permissions.AllowAny,),
 )
 
 urlpatterns = [
-    path('', schema_view.with_ui()),
+    path('api/v1/docs/', schema_view.with_ui()),
     path('admin/', admin.site.urls),
     path('api/v1/account/', include('account.urls')),
     path('api/v1/', include(router.urls)),

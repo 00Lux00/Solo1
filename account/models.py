@@ -34,7 +34,7 @@ class User(AbstractUser):
     email = models.EmailField(max_length=100, unique=True)
     avatar = models.ImageField(default='defaultimages/default.jpeg', upload_to='avatar',null=True, blank=True)
     about = models.CharField(max_length=160, blank=True, null=True)
-    country = models.CharField(max_length=30,choices=sorted(COUNTRIES.items()), null=True, blank=True)
+    # country = models.CharField(max_length=30,choices=sorted(COUNTRIES.items()), null=True, blank=True)
     is_active = models.BooleanField(default=False)
     created_date = models.DateField(auto_now_add=True)
     name = models.CharField(max_length=100, blank=True, null=True)
