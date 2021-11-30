@@ -32,8 +32,7 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     username = models.CharField(max_length=100, blank=True, null=True)
     email = models.EmailField(max_length=100, unique=True)
-    avatar = models.ImageField(default='defaultimages/default.jpeg', upload_to='avatar', blank=True, null=True)
-    header = models.ImageField(default='defaultimages/defaultcover.png', upload_to='headers', blank=True, null=True)
+    avatar = models.ImageField(default='defaultimages/default.jpeg', upload_to='avatar',null=True, blank=True)
     about = models.CharField(max_length=160, blank=True, null=True)
     country = models.CharField(max_length=30,choices=sorted(COUNTRIES.items()), null=True, blank=True)
     is_active = models.BooleanField(default=False)
@@ -42,7 +41,6 @@ class User(AbstractUser):
     activation_code = models.CharField(max_length=255, blank=True)
     followers = models.ManyToManyField('self', related_name='followers', blank=True)
     followings = models.ManyToManyField('self', related_name='followings', blank=True)
-    # auth_provider = models.CharField(max_length=255, blank=True, null=False, default=AUTH_PROVIDERS.get('email'))
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
@@ -77,3 +75,11 @@ class User(AbstractUser):
     @property
     def post_count(self):
         return self.post.all().count()
+
+
+
+
+
+
+    #class user 4-th point
+    # header = models.ImageField(default='defaultimages/defaultcover.png', upload_to='headers', blank=True, null=True)

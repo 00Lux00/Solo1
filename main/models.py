@@ -49,6 +49,12 @@ class Likes(models.Model):
         return str(self.likes)
 
 
+class Favorite(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='favourites')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='favourites')
+    favorite = models.BooleanField(default=True)
+
+
 class Rating(models.Model):
     rating = models.IntegerField(default=0)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='rating')
@@ -56,10 +62,3 @@ class Rating(models.Model):
 
     def __str__(self):
         return str(self.rating)
-
-class Favorite(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='favourites')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='favourites')
-    favorite = models.BooleanField(default=True)
-
-
